@@ -1,0 +1,66 @@
+<mat-card class="mat-elevation-z4">
+  <mat-card-content>
+    <mat-card-subtitle>
+      <mat-error *ngIf="signinForm.errors">Username or Password is incorrect.</mat-error>
+  </mat-card-subtitle>
+    <div>
+      <form [formGroup]="signinForm" (ngSubmit)="loginUser()">
+        <mat-form-field>
+          <mat-icon matPrefix>email</mat-icon>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="Email"
+          />
+          <mat-error
+            *ngIf="
+              signinForm.get('email')!.hasError('required') &&
+              (signinForm.get('email')!.touched ||
+                signinForm.get('email')!.dirty)
+            "
+          >
+            Email is required!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input
+            matInput
+            [type]="showPassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Password"
+          />
+          <mat-icon matSuffix (click)="showPassword = !showPassword">{{showPassword ? 'visibility_off' :
+            'visibility'}}</mat-icon>
+          <mat-error
+            *ngIf="
+              signinForm.get('password')!.hasError('required') &&
+              (signinForm.get('password')!.touched ||
+                signinForm.get('password')!.dirty)
+            "
+          >
+            Password is required!
+          </mat-error>
+        </mat-form-field>
+        <mat-card-actions>
+          <button
+            mat-stroked-button
+            type="submit"
+            [disabled]="!signinForm.valid"
+          >
+            Sign in
+          </button>
+          <!-- <a [routerLink]="['not-found']">Forgot Password</a> -->
+        </mat-card-actions>
+      </form>
+      <div style="float: right; margin-bottom: 20px">
+        <strong>Don't have an account yet?</strong>
+        <span style="margin-right: 10px"></span>
+        <a [routerLink]="['/sign-up']">Register Now</a>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<hr />
